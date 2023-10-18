@@ -32,23 +32,34 @@ jobs:
     name: Run Simulation
     runs-on: ubuntu-latest
     steps:
-    
+
+    # access the repository
     - name: Checkout repo content
       uses: actions/checkout@v2
 
+    # setup python to run the simulation
     - name: Setup python
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
         cache: 'pip'
-    - name: Install python packages
-      run: |
-        pip install -r ".github/workflows/requirements.txt"
+    - run: pip install -r requirements.txt
 
+    # run the python script to create the CSVs
     - name: Run simulation script
       run: python main.py
-      shell: sh
 
+    # commit the CSVs to the repository
+    - name: Commit output tables
+      env:
+        REPO_KEY: ${{ secrets.GITHUB_TOKEN }}
+        username: github-actions
+      run: |
+        git config --local user.name actions-user
+        git config --local user.email actions@github.com
+        git add - A
+        git commit -am "Load Sim Results $(date)
+        git push origin master
 
 
 
