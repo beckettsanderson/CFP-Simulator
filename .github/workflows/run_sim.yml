@@ -52,15 +52,21 @@ jobs:
 
     # commit the CSVs to the repository
     - name: Commit output tables
-      env:
-        REPO_KEY: ${{ secrets.GITHUB_TOKEN }}
-        username: github-actions
       run: |-
-        git config user.name actions-user
-        git config user.email actions@github.com
-        git add - A
-        git commit -am "Load Sim Results $(date)
-        git push origin master
+        git config user.name "Automated"
+        git config user.email "actions@users.noreply.github.com"
+        git add -A
+        timestamp=$(date -u)
+        git commit -m "Latest data: ${timestamp}" || exit 0
+        git push
 
-
+      #env:
+      #  REPO_KEY: ${{ secrets.GITHUB_TOKEN }}
+      #  username: github-actions
+      #run: |-
+      #  git config user.name actions-user
+      #  git config user.email actions@github.com
+      #  git add - A
+      #  git commit -am "Load Sim Results $(date)
+      #  git push origin master
 
