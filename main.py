@@ -428,7 +428,7 @@ def run_sim(conf_df, elo_df, sch_df, fav_mov_df, upset_mov_df):
     # create the widgets for the progress bar
     widgets = [
         ' [', progressbar.Timer(), '] ',
-        progressbar.GranularBar(), ' ',
+        # progressbar.GranularBar(), ' ',
         progressbar.Percentage(), ' ',
         progressbar.ETA(),
     ]
