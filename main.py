@@ -491,8 +491,8 @@ def main():
     file_name_add = f'_{datetime.now().strftime("%b%y")}_AQ{AQ}_P{PLAYOFF}_N{N}'
 
     # save the dataframes to csv
-    team_playoff_stats.to_csv(f"./Simulation Outputs/team_stats{file_name_add}.csv")
-    conf_playoff_stats.to_csv(f"./Simulation Outputs/conference_stats{file_name_add}.csv")
+    team_playoff_stats.to_csv(f"./Simulation Outputs/Team Stats/team_stats{file_name_add}.csv")
+    conf_playoff_stats.to_csv(f"./Simulation Outputs/Conference Stats/conference_stats{file_name_add}.csv")
 
     # display the tables within python
     print(team_playoff_stats, "\n")
