@@ -1,14 +1,11 @@
 """
 CFB Simulation Model
-
 """
-from warnings import simplefilter
 import pandas as pd
 import numpy as np
 import progressbar
 from datetime import datetime
 
-simplefilter(action='ignore', category=FutureWarning)
 pd.set_option('display.max_columns', 10)
 pd.set_option('display.max_rows', None)
 pd.set_option('mode.chained_assignment', None)
