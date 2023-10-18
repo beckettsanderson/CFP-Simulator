@@ -48,6 +48,10 @@ jobs:
 
     # run the python script to create the CSVs
     - name: Run simulation script
+      env: 
+        INPUT_N: ${{ github.event.inputs.N }}
+        INPUT_AQ: ${{ github.event.inputs.AQ }}
+        INPUT_PLAYOFF: ${{ github.event.inputs.PLAYOFF }}
       run: python main.py
 
     # commit the CSVs to the repository
