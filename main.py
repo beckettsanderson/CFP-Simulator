@@ -22,9 +22,9 @@ UPSET_MOV = "./Input Data/MOV Favorite Upset.xlsx"
 
 # set up the global variables for num simulations, qualifiers, and playoff teams based on baseline or git input
 try:
-    N = os.environ['INPUT_N']
-    AQ = os.environ['INPUT_AQ']
-    PLAYOFF = os.environ['INPUT_PLAYOFF']
+    N = int(os.environ['INPUT_N'])
+    AQ = int(os.environ['INPUT_AQ'])
+    PLAYOFF = int(os.environ['INPUT_PLAYOFF'])
 except KeyError:
     N = 50  # number of simulations to run
     AQ = 6  # number of automatic qualifiers
