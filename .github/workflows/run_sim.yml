@@ -29,11 +29,37 @@ on:
 jobs:
 
   run_sim:
-    # The type of runner that the job will run on
+    name: Run Simulation
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello ${{ inputs.name }}"
+
+    # access the repository
+    - name: Checkout repo content
+      uses: actions/checkout@v2
+
+    # setup python to run the simulation
+    - name: Setup python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+    - run: pip install -r ./.github/workflows/requirements.txt
+
+    # run the python script to create the CSVs
+    - name: Run simulation script
+      run: python main.py
+
+    # commit the CSVs to the repository
+    - name: Commit output tables
+      env:
+        REPO_KEY: ${{ secrets.GITHUB_TOKEN }}
+        username: github-actions
+      run: |
+        git config --local user.name actions-user
+        git config --local user.email actions@github.com
+        git add - A
+        git commit -am "Load Sim Results $(date)
+        git push origin master
+
+
+
