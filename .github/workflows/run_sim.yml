@@ -14,7 +14,6 @@ on:
           - '100'
       AQ:
         description: 'Number of automatic qualifiers:'
-        default: '6'
         required: true
         options:
           - '6'
