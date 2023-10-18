@@ -1,4 +1,3 @@
-warnings
 pandas
 numpy
 progressbar
