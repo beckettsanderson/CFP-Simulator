@@ -53,9 +53,10 @@ jobs:
     # commit the CSVs to the repository
     - name: Commit output tables
       run: |-
-        git config user.name "Actions-User"
+        git config user.name "Actions"
         git config user.email "actions@users.noreply.github.com"
-        git add - A
-        git commit -m "Load Sim Results $(date -u)"
+        git add -A
+        timestamp=$(date -u)
+        git commit -m "Upload Simulation Results ${timestamp}" || exit 0
         git push
 
