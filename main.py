@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import progressbar
 from datetime import datetime
+import os
 
 simplefilter(action='ignore', category=FutureWarning)
 pd.set_option('display.max_columns', 10)
@@ -19,11 +20,17 @@ SCHEDULE = "./Input Data/Mock Schedule.xlsx"
 FAV_MOV = "./Input Data/MOV Favorite Win.xlsx"
 UPSET_MOV = "./Input Data/MOV Favorite Upset.xlsx"
 
-""" VARIABLE INPUTS """
-N = 50  # number of simulations to run
-AQ = 6  # number of automatic qualifiers
-PLAYOFF = 12  # number of playoff teams
+# set up the global variables for num simulations, qualifiers, and playoff teams based on baseline or git input
+try:
+    N = os.environ['INPUT_N']
+    AQ = os.environ['INPUT_AQ']
+    PLAYOFF = os.environ['INPUT_PLAYOFF']
+except KeyError:
+    N = 50  # number of simulations to run
+    AQ = 6  # number of automatic qualifiers
+    PLAYOFF = 12  # number of playoff teams
 
+""" VARIABLE INPUTS """
 # matchup elo adjustments
 HOME = 30  # adjustment for home advantage
 K = 125
@@ -367,14 +374,14 @@ def clean_results(team_playoff_stats, conf_playoff_stats, conf_df):
     conf_playoff_stats.fillna(0, inplace=True)
 
     # take the percentages for teams for playoff appearances and average playoff appearances for conferences
-    team_playoff_stats['Playoffs'] = team_playoff_stats['Playoffs'].apply(lambda x: round(x / N, 4) * 100)
-    team_playoff_stats['AQ'] = team_playoff_stats['AQ'].apply(lambda x: round(x / N, 4) * 100)
+    team_playoff_stats['Playoffs'] = team_playoff_stats['Playoffs'].apply(lambda x: round((x / N) * 100, 2))
+    team_playoff_stats['AQ'] = team_playoff_stats['AQ'].apply(lambda x: round((x / N) * 100, 2))
     team_playoff_stats['%AQ'] = team_playoff_stats['AQ'] / team_playoff_stats['Playoffs']
-    team_playoff_stats['%AQ'] = team_playoff_stats['%AQ'].apply(lambda x: round(x, 4) * 100)
+    team_playoff_stats['%AQ'] = team_playoff_stats['%AQ'].apply(lambda x: round(x * 100, 2))
     conf_playoff_stats['Playoffs'] = conf_playoff_stats['Playoffs'].apply(lambda x: round(x / N, 2))
     conf_playoff_stats['AQ'] = conf_playoff_stats['AQ'].apply(lambda x: round(x / N, 2))
     conf_playoff_stats['%AQ'] = conf_playoff_stats['AQ'] / conf_playoff_stats['Playoffs']
-    conf_playoff_stats['%AQ'] = conf_playoff_stats['%AQ'].apply(lambda x: round(x, 4) * 100)
+    conf_playoff_stats['%AQ'] = conf_playoff_stats['%AQ'].apply(lambda x: round(x * 100, 2))
 
     # turn the team index into a column, sort by values, and rename columns
     team_playoff_stats.reset_index(inplace=True)
