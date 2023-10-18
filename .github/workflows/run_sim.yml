@@ -5,6 +5,7 @@ on:
     # Inputs the workflow accepts.
     inputs:
       N:
+        type: choice
         description: 'Number of simulations to run:'
         default: '2000'
         required: true
@@ -13,7 +14,9 @@ on:
           - '1000'
           - '100'
       AQ:
+        type: choice
         description: 'Number of automatic qualifiers:'
+        default: '6'
         required: true
         options:
           - '6'
