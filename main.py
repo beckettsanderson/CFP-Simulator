@@ -310,7 +310,10 @@ def get_top_teams(season_results):
 
         # get the top team from each conference and append top team to the conference winners df
         top_team = season_results[season_results['Conference'] == conf].iloc[0]
-        conf_winners = conf_winners.append(top_team)
+        conf_winners = pd.concat([conf_winners, top_team], ignore_index=True, axis=1)
+
+    # transpose the data into the correct format
+    conf_winners = conf_winners.transpose()
 
     # get teams outside the top number that are auto qualified
     outside_aq = conf_winners.iloc[:AQ].query(f'index > {PLAYOFF - 1}')
