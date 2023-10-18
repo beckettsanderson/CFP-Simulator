@@ -1,18 +1,28 @@
-name: Manual workflow
+name: Run CFP Simulation
 
 on:
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
-      name:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
-        # Default value if no value is explicitly provided
-        default: 'World'
-        # Input has to be provided for the workflow to run
+      N:
+        description: 'Number of simulations to run:'
+        default: '2000'
         required: true
-        # The data type of the input
-        type: string
+        options: 
+          - '2000'
+          - '1000'
+          - '100'
+      AQ:
+        description: 'Number of automatic qualifiers:'
+        default: '6'
+        required: true
+        options:
+          - '6'
+          - '5'
+      PLAYOFF:
+        description: 'Number of teams that make the playoffs:'
+        default: '12'
+        required: true
 
 jobs:
 
