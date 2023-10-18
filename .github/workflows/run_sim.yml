@@ -43,7 +43,8 @@ jobs:
       with:
         python-version: '3.10'
         cache: 'pip'
-    - run: pip install -r ./.github/workflows/requirements.txt
+    - name: Install packages
+      run: pip install -r ./.github/workflows/requirements.txt
 
     # run the python script to create the CSVs
     - name: Run simulation script
