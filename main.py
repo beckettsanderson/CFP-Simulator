@@ -21,7 +21,7 @@ FAV_MOV = "./Input Data/MOV Favorite Win.xlsx"
 UPSET_MOV = "./Input Data/MOV Favorite Upset.xlsx"
 
 """ VARIABLE INPUTS """
-N = 100  # number of simulations to run
+N = 50  # number of simulations to run
 AQ = 6  # number of automatic qualifiers
 PLAYOFF = 12  # number of playoff teams
 
