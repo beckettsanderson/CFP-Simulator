@@ -464,7 +464,8 @@ def run_sim(conf_df, elo_df, sch_df, fav_mov_df, upset_mov_df):
                                                                aq_confs)
 
             # update the bar
-            bar.update(i)
+            if i % 5 == 0:
+                bar.update(i)
 
     # clean the dictionaries into better displayed dataframes
     team_playoff_stats, conf_playoff_stats = clean_results(team_playoff_stats, conf_playoff_stats, conf_df)
