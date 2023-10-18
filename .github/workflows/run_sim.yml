@@ -55,9 +55,9 @@ jobs:
       env:
         REPO_KEY: ${{ secrets.GITHUB_TOKEN }}
         username: github-actions
-      run: |
-        git config --local user.name actions-user
-        git config --local user.email actions@github.com
+      run: |-
+        git config user.name actions-user
+        git config user.email actions@github.com
         git add - A
         git commit -am "Load Sim Results $(date)
         git push origin master
