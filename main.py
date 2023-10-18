@@ -14,11 +14,11 @@ pd.set_option('display.max_rows', None)
 pd.set_option('mode.chained_assignment', None)
 
 # input data files
-CONFERENCES = "./Conferences.xlsx"
-ELO = "./Elo By Year.xlsx"
-SCHEDULE = "./Mock Schedule.xlsx"
-FAV_MOV = "./MOV Favorite Win.xlsx"
-UPSET_MOV = "./MOV Favorite Upset.xlsx"
+CONFERENCES = "./Input Data/Conferences.xlsx"
+ELO = "./Input Data/Elo By Year.xlsx"
+SCHEDULE = "./Input Data/Mock Schedule.xlsx"
+FAV_MOV = "./Input Data/MOV Favorite Win.xlsx"
+UPSET_MOV = "./Input Data/MOV Favorite Upset.xlsx"
 
 """ VARIABLE INPUTS """
 N = 100  # number of simulations to run
@@ -485,12 +485,11 @@ def main():
     team_playoff_stats, conf_playoff_stats = run_sim(conf_df, elo_df, sch_df, fav_mov_df, upset_mov_df)
 
     # create unique csv name to save file
-    date = datetime.now().strftime('%b%y')
-    file_name_add = f'_{date}_AQ{AQ}_P{PLAYOFF}_N{N}'
+    file_name_add = f'_{datetime.now().strftime("%b%y")}_AQ{AQ}_P{PLAYOFF}_N{N}'
 
     # save the dataframes to csv
-    team_playoff_stats.to_csv(f"Simulation Outputs/team_stats{file_name_add}.csv")
-    conf_playoff_stats.to_csv(f"Simulation Outputs/conference_stats{file_name_add}.csv")
+    team_playoff_stats.to_csv(f"./Simulation Outputs/team_stats{file_name_add}.csv")
+    conf_playoff_stats.to_csv(f"./Simulation Outputs/conference_stats{file_name_add}.csv")
 
     # display the tables within python
     print(team_playoff_stats, "\n")
