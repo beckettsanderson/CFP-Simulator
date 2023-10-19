@@ -59,6 +59,7 @@ jobs:
       run: |-
         git config user.name "Actions"
         git config user.email "actions@users.noreply.github.com"
+        git pull
         git add -A
         timestamp=$(date -u)
         git commit -m "Upload Simulation Results ${timestamp}" || exit 0
