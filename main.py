@@ -26,9 +26,10 @@ try:
     AQ = int(os.environ['INPUT_AQ'])
     PLAYOFF = int(os.environ['INPUT_PLAYOFF'])
 except KeyError:
-    N = 50  # number of simulations to run
+    N = 100  # number of simulations to run
     AQ = 6  # number of automatic qualifiers
     PLAYOFF = 12  # number of playoff teams
+
 
 """ VARIABLE INPUTS """
 # matchup elo adjustments
@@ -316,7 +317,7 @@ def get_top_teams(season_results):
 
         # get the top team from each conference and append top team to the conference winners df
         top_team = season_results[season_results['Conference'] == conf].iloc[0]
-        conf_winners = pd.concat([conf_winners, top_team], ignore_index=True, axis=1)
+        conf_winners = pd.concat([conf_winners, top_team], ignore_index=False, axis=1)
 
     # transpose the data into the correct format
     conf_winners = conf_winners.transpose()
@@ -373,14 +374,16 @@ def clean_results(team_playoff_stats, conf_playoff_stats, conf_df):
     team_playoff_stats.fillna(0, inplace=True)
     conf_playoff_stats.fillna(0, inplace=True)
 
-    # take the percentages for teams for playoff appearances and average playoff appearances for conferences
-    team_playoff_stats['Playoffs'] = team_playoff_stats['Playoffs'].apply(lambda x: round((x / N) * 100, 2))
-    team_playoff_stats['AQ'] = team_playoff_stats['AQ'].apply(lambda x: round((x / N) * 100, 2))
+    # create new calculated fields for percentage of the time the team is an auto qualifier
     team_playoff_stats['%AQ'] = team_playoff_stats['AQ'] / team_playoff_stats['Playoffs']
-    team_playoff_stats['%AQ'] = team_playoff_stats['%AQ'].apply(lambda x: round(x * 100, 2))
+    conf_playoff_stats['%AQ'] = conf_playoff_stats['AQ'] / conf_playoff_stats['Playoffs']
+
+    # take the percentages for teams for playoff appearances and average playoff appearances for conferences
+    team_playoff_stats['Playoffs'] = team_playoff_stats['Playoffs'].apply(lambda x: round((x / N) * 100, 4))
+    team_playoff_stats['AQ'] = team_playoff_stats['AQ'].apply(lambda x: round((x / N) * 100, 4))
+    team_playoff_stats['%AQ'] = team_playoff_stats['%AQ'].apply(lambda x: round(x * 100, 4))
     conf_playoff_stats['Playoffs'] = conf_playoff_stats['Playoffs'].apply(lambda x: round(x / N, 2))
     conf_playoff_stats['AQ'] = conf_playoff_stats['AQ'].apply(lambda x: round(x / N, 2))
-    conf_playoff_stats['%AQ'] = conf_playoff_stats['AQ'] / conf_playoff_stats['Playoffs']
     conf_playoff_stats['%AQ'] = conf_playoff_stats['%AQ'].apply(lambda x: round(x * 100, 2))
 
     # turn the team index into a column, sort by values, and rename columns
