@@ -1,114 +1,114 @@
 ,Team,Conference,% Time in Playoffs,% Make Playoffs Due to AQ,% of Appearances Due to AQ
-0,Ohio State,Big Ten,77.95,0.0,0.0
-1,Clemson,ACC,73.3,0.05,0.0682
-2,Louisiana State,SEC,70.45,0.0,0.0
-3,Oklahoma,SEC,63.45,0.0,0.0
-4,Oregon,Big Ten,43.65,0.0,0.0
-5,Notre Dame,Ind,36.3,0.0,0.0
-6,Georgia,SEC,35.95,0.0,0.0
-7,Memphis,AAC,35.1,2.45,6.9801
-8,Utah,Big 12,31.2,0.1,0.3205
-9,Wisconsin,Big Ten,30.45,0.0,0.0
-10,Alabama,SEC,29.85,0.0,0.0
-11,Penn State,Big Ten,29.55,0.0,0.0
-12,Florida,SEC,26.1,0.0,0.0
-13,Auburn,SEC,24.6,0.0,0.0
-14,Iowa,Big Ten,24.55,0.0,0.0
-15,Baylor,Big 12,24.4,0.0,0.0
-16,Michigan,Big Ten,23.6,0.0,0.0
-17,Oklahoma State,Big 12,20.85,0.0,0.0
-18,Southern California,Big Ten,20.05,0.0,0.0
-19,Virginia,ACC,19.2,0.0,0.0
-20,Kansas State,Big 12,18.5,0.0,0.0
-21,Boise State,MWC,17.85,1.05,5.8824
-22,Southern Methodist,ACC,16.55,0.0,0.0
-23,Navy,AAC,16.4,0.95,5.7927
-24,Washington,Big Ten,16.4,0.0,0.0
-25,Virginia Tech,ACC,15.2,0.0,0.0
-26,Cincinnati,Big 12,14.05,0.0,0.0
-27,Minnesota,Big Ten,13.75,0.0,0.0
-28,Indiana,Big Ten,13.7,0.0,0.0
-29,Air Force,MWC,13.55,1.1,8.1181
-30,Iowa State,Big 12,13.25,0.0,0.0
-31,Tennessee,SEC,12.45,0.0,0.0
-32,Arizona State,Big 12,11.95,0.0,0.0
-33,Texas A&M,SEC,11.9,0.0,0.0
-34,Central Florida,Big 12,11.7,0.0,0.0
-35,California,ACC,10.1,0.0,0.0
-36,Kentucky,SEC,9.45,0.0,0.0
-37,West Virginia,Big 12,9.1,0.0,0.0
-38,Boston College,ACC,9.1,0.0,0.0
-39,Texas,SEC,9.0,0.0,0.0
-40,Louisville,ACC,8.65,0.05,0.578
-41,Colorado,Big 12,8.35,0.0,0.0
-42,Florida State,ACC,8.2,0.0,0.0
-43,Texas Christian,Big 12,8.15,0.0,0.0
-44,Brigham Young,Big 12,8.1,0.05,0.6173
-45,Washington State,Pac-12,7.5,0.25,3.3333
-46,UCLA,Big Ten,7.05,0.0,0.0
-47,Miami (FL),ACC,7.05,0.0,0.0
-48,Pittsburgh,ACC,7.0,0.0,0.0
-49,Wake Forest,ACC,6.85,0.0,0.0
-50,Syracuse,ACC,6.6,0.0,0.0
-51,Mississippi State,SEC,5.85,0.0,0.0
-52,Oregon State,Pac-12,5.4,0.1,1.8519
-53,Michigan State,Big Ten,5.3,0.0,0.0
-54,San Diego State,MWC,5.05,0.45,8.9109
-55,Hawaii,MWC,4.95,0.35,7.0707
-56,Nebraska,Big Ten,4.8,0.0,0.0
-57,Florida Atlantic,AAC,4.7,0.55,11.7021
-58,North Carolina,ACC,4.65,0.0,0.0
-59,Illinois,Big Ten,4.55,0.0,0.0
-60,Temple,AAC,4.45,0.25,5.618
-61,Stanford,ACC,3.65,0.0,0.0
-62,Purdue,Big Ten,3.55,0.0,0.0
-63,Missouri,SEC,3.35,0.0,0.0
-64,Houston,Big 12,3.3,0.0,0.0
-65,Wyoming,MWC,3.2,0.55,17.1875
-66,Utah State,MWC,2.75,0.45,16.3636
-67,Texas Tech,Big 12,2.75,0.0,0.0
-68,Duke,ACC,2.75,0.0,0.0
-69,Northwestern,Big Ten,2.55,0.0,0.0
-70,Mississippi,SEC,2.5,0.0,0.0
-71,Georgia Tech,ACC,2.35,0.0,0.0
-72,Kansas,Big 12,2.15,0.0,0.0
-73,South Carolina,SEC,1.85,0.0,0.0
-74,Vanderbilt,SEC,1.75,0.0,0.0
-75,Nevada,MWC,1.65,0.25,15.1515
-76,Tulane,AAC,1.6,0.25,15.625
-77,Miami (OH),MAC,1.5,0.55,36.6667
-78,Tulsa,AAC,1.5,0.3,20.0
-79,Colorado State,MWC,1.3,0.05,3.8462
-80,Nevada-Las Vegas,MWC,1.05,0.3,28.5714
-81,Arizona,Big 12,1.05,0.0,0.0
-82,Alabama-Birmingham,AAC,1.0,0.2,20.0
-83,Marshall,Sun Belt,1.0,0.65,65.0
-84,Buffalo,MAC,0.95,0.3,31.5789
-85,Appalachian State,Sun Belt,0.85,0.4,47.0588
-86,North Carolina State,ACC,0.8,0.0,0.0
-87,Central Michigan,MAC,0.8,0.3,37.5
-88,San Jose State,MWC,0.75,0.25,33.3333
-89,Maryland,Big Ten,0.65,0.0,0.0
-90,Rice,AAC,0.65,0.2,30.7692
-91,Fresno State,MWC,0.65,0.15,23.0769
-92,South Florida,AAC,0.55,0.15,27.2727
-93,Western Kentucky,CUSA,0.55,0.45,81.8182
-94,Kent State,MAC,0.45,0.2,44.4444
-95,East Carolina,AAC,0.45,0.05,11.1111
-96,Toledo,MAC,0.45,0.2,44.4444
-97,Ohio,MAC,0.4,0.05,12.5
-98,Arkansas,SEC,0.4,0.0,0.0
-99,Arkansas State,Sun Belt,0.35,0.3,85.7143
-100,Eastern Michigan,MAC,0.35,0.05,14.2857
-101,Ball State,MAC,0.3,0.1,33.3333
-102,Northern Illinois,MAC,0.25,0.0,0.0
-103,Western Michigan,MAC,0.25,0.05,20.0
-104,Louisiana Tech,CUSA,0.25,0.25,100.0
-105,Rutgers,Big Ten,0.2,0.0,0.0
-106,Southern Mississippi,Sun Belt,0.2,0.15,75.0
-107,North Texas,AAC,0.2,0.1,50.0
-108,Troy,Sun Belt,0.15,0.1,66.6667
-109,Army,Ind,0.15,0.0,0.0
-110,Louisiana-Monroe,Sun Belt,0.1,0.1,100.0
+0,Ohio State,Big Ten,78.1,0.0,0.0
+1,Clemson,ACC,74.25,0.05,0.0673
+2,Louisiana State,SEC,70.6,0.0,0.0
+3,Oklahoma,SEC,63.9,0.0,0.0
+4,Oregon,Big Ten,44.45,0.0,0.0
+5,Notre Dame,Ind,35.95,0.0,0.0
+6,Georgia,SEC,35.35,0.0,0.0
+7,Memphis,AAC,33.05,1.75,5.295
+8,Utah,Big 12,29.7,0.0,0.0
+9,Wisconsin,Big Ten,29.55,0.0,0.0
+10,Penn State,Big Ten,29.05,0.0,0.0
+11,Alabama,SEC,28.6,0.0,0.0
+12,Auburn,SEC,28.1,0.0,0.0
+13,Iowa,Big Ten,26.8,0.0,0.0
+14,Florida,SEC,26.2,0.0,0.0
+15,Baylor,Big 12,25.1,0.0,0.0
+16,Michigan,Big Ten,24.55,0.0,0.0
+17,Southern California,Big Ten,20.8,0.0,0.0
+18,Virginia,ACC,20.25,0.0,0.0
+19,Oklahoma State,Big 12,19.75,0.1,0.5063
+20,Kansas State,Big 12,18.95,0.05,0.2639
+21,Boise State,MWC,18.15,0.65,3.5813
+22,Navy,AAC,16.45,1.0,6.079
+23,Washington,Big Ten,15.55,0.0,0.0
+24,Southern Methodist,ACC,15.4,0.0,0.0
+25,Cincinnati,Big 12,15.0,0.1,0.6667
+26,Minnesota,Big Ten,14.6,0.0,0.0
+27,Indiana,Big Ten,13.85,0.0,0.0
+28,Virginia Tech,ACC,13.8,0.0,0.0
+29,Tennessee,SEC,13.55,0.0,0.0
+30,Arizona State,Big 12,13.25,0.0,0.0
+31,Air Force,MWC,12.9,1.0,7.7519
+32,Iowa State,Big 12,11.6,0.0,0.0
+33,Texas A&M,SEC,11.2,0.0,0.0
+34,Central Florida,Big 12,10.55,0.0,0.0
+35,California,ACC,9.9,0.0,0.0
+36,Kentucky,SEC,9.9,0.0,0.0
+37,West Virginia,Big 12,9.7,0.0,0.0
+38,Brigham Young,Big 12,9.1,0.0,0.0
+39,Texas,SEC,8.8,0.0,0.0
+40,Miami (FL),ACC,8.5,0.0,0.0
+41,Florida State,ACC,7.95,0.0,0.0
+42,Syracuse,ACC,7.7,0.0,0.0
+43,Boston College,ACC,7.65,0.0,0.0
+44,Colorado,Big 12,7.6,0.0,0.0
+45,Louisville,ACC,7.4,0.0,0.0
+46,Washington State,Pac-12,7.15,0.1,1.3986
+47,Wake Forest,ACC,6.7,0.0,0.0
+48,Pittsburgh,ACC,6.65,0.0,0.0
+49,Michigan State,Big Ten,6.6,0.0,0.0
+50,Texas Christian,Big 12,6.4,0.0,0.0
+51,Mississippi State,SEC,6.35,0.0,0.0
+52,UCLA,Big Ten,6.05,0.0,0.0
+53,Florida Atlantic,AAC,5.95,0.6,10.084
+54,San Diego State,MWC,5.6,0.7,12.5
+55,North Carolina,ACC,5.25,0.0,0.0
+56,Oregon State,Pac-12,4.9,0.1,2.0408
+57,Nebraska,Big Ten,4.7,0.0,0.0
+58,Temple,AAC,4.55,0.35,7.6923
+59,Hawaii,MWC,4.5,0.4,8.8889
+60,Northwestern,Big Ten,3.8,0.0,0.0
+61,Duke,ACC,3.55,0.05,1.4085
+62,Illinois,Big Ten,3.45,0.0,0.0
+63,Purdue,Big Ten,3.45,0.0,0.0
+64,Wyoming,MWC,3.2,0.7,21.875
+65,Stanford,ACC,3.05,0.0,0.0
+66,Texas Tech,Big 12,2.9,0.0,0.0
+67,Houston,Big 12,2.8,0.0,0.0
+68,Utah State,MWC,2.5,0.4,16.0
+69,Kansas,Big 12,2.45,0.0,0.0
+70,Georgia Tech,ACC,2.45,0.0,0.0
+71,South Carolina,SEC,2.3,0.0,0.0
+72,Missouri,SEC,1.95,0.0,0.0
+73,Tulane,AAC,1.9,0.1,5.2632
+74,Mississippi,SEC,1.7,0.0,0.0
+75,Vanderbilt,SEC,1.65,0.0,0.0
+76,Tulsa,AAC,1.65,0.35,21.2121
+77,Miami (OH),MAC,1.65,0.7,42.4242
+78,Arizona,Big 12,1.65,0.0,0.0
+79,Colorado State,MWC,1.6,0.2,12.5
+80,Nevada,MWC,1.4,0.25,17.8571
+81,Alabama-Birmingham,AAC,1.4,0.05,3.5714
+82,North Carolina State,ACC,1.15,0.0,0.0
+83,Appalachian State,Sun Belt,1.1,0.55,50.0
+84,Central Michigan,MAC,1.05,0.45,42.8571
+85,Nevada-Las Vegas,MWC,1.0,0.3,30.0
+86,Marshall,Sun Belt,0.85,0.35,41.1765
+87,San Jose State,MWC,0.8,0.1,12.5
+88,South Florida,AAC,0.8,0.2,25.0
+89,Buffalo,MAC,0.8,0.25,31.25
+90,Western Kentucky,CUSA,0.55,0.3,54.5455
+91,Kent State,MAC,0.55,0.35,63.6364
+92,Rice,AAC,0.45,0.05,11.1111
+93,Ohio,MAC,0.4,0.1,25.0
+94,Northern Illinois,MAC,0.4,0.2,50.0
+95,Eastern Michigan,MAC,0.4,0.2,50.0
+96,Western Michigan,MAC,0.3,0.2,66.6667
+97,Ball State,MAC,0.3,0.05,16.6667
+98,Maryland,Big Ten,0.3,0.0,0.0
+99,Fresno State,MWC,0.3,0.1,33.3333
+100,Arkansas State,Sun Belt,0.25,0.2,80.0
+101,Rutgers,Big Ten,0.2,0.0,0.0
+102,Toledo,MAC,0.15,0.1,66.6667
+103,Southern Mississippi,Sun Belt,0.15,0.1,66.6667
+104,Louisiana Tech,CUSA,0.15,0.15,100.0
+105,Troy,Sun Belt,0.15,0.0,0.0
+106,East Carolina,AAC,0.1,0.05,50.0
+107,North Texas,AAC,0.1,0.0,0.0
+108,Army,Ind,0.1,0.0,0.0
+109,Arkansas,SEC,0.1,0.0,0.0
+110,Charlotte,AAC,0.05,0.0,0.0
 111,Florida International,CUSA,0.05,0.05,100.0
-112,New Mexico,MWC,0.05,0.0,0.0
+112,New Mexico,MWC,0.05,0.05,100.0
