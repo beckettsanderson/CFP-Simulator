@@ -384,12 +384,12 @@ def clean_results(team_playoff_stats, conf_playoff_stats, conf_df):
     # reorganize the formatting within the columns to get percentages
     team_playoff_stats['%AQ'] = team_playoff_stats['AQ'] / team_playoff_stats['Playoffs']
     conf_playoff_stats['%AQ'] = conf_playoff_stats['AQ'] / conf_playoff_stats['Playoffs']
-    team_playoff_stats['Playoffs'] = team_playoff_stats['Playoffs'].apply(lambda x: round((x / N) * 100, 4))
-    team_playoff_stats['AQ'] = team_playoff_stats['AQ'].apply(lambda x: round((x / N) * 100, 4))
-    team_playoff_stats['%AQ'] = team_playoff_stats['%AQ'].apply(lambda x: round(x * 100, 4))
-    conf_playoff_stats['Playoffs'] = conf_playoff_stats['Playoffs'].apply(lambda x: round(x / N, 2))
-    conf_playoff_stats['AQ'] = conf_playoff_stats['AQ'].apply(lambda x: round(x / N, 2))
-    conf_playoff_stats['%AQ'] = conf_playoff_stats['%AQ'].apply(lambda x: round(x * 100, 2))
+    team_playoff_stats['Playoffs'] = team_playoff_stats['Playoffs'].apply(lambda x: round((x / N) * 100, 3))
+    team_playoff_stats['AQ'] = team_playoff_stats['AQ'].apply(lambda x: round((x / N) * 100, 3))
+    team_playoff_stats['%AQ'] = team_playoff_stats['%AQ'].apply(lambda x: round(x * 100, 3))
+    conf_playoff_stats['Playoffs'] = conf_playoff_stats['Playoffs'].apply(lambda x: round(x / N, 3))
+    conf_playoff_stats['AQ'] = conf_playoff_stats['AQ'].apply(lambda x: round(x / N, 3))
+    conf_playoff_stats['%AQ'] = conf_playoff_stats['%AQ'].apply(lambda x: round(x * 100, 3))
 
     # rename the columns
     team_playoff_stats.columns = ['Team', '% Time in Playoffs', '% Make Playoffs Due to AQ',
