@@ -374,11 +374,16 @@ def clean_results(team_playoff_stats, conf_playoff_stats, conf_df):
     team_playoff_stats.fillna(0, inplace=True)
     conf_playoff_stats.fillna(0, inplace=True)
 
-    # create new calculated fields for percentage of the time the team is an auto qualifier
+    # turn the team index into a column, sort by values, and add a total row
+    team_playoff_stats.reset_index(inplace=True)
+    conf_playoff_stats.reset_index(inplace=True)
+    team_playoff_stats.sort_values(by=['Playoffs'], ascending=False, ignore_index=True, inplace=True)
+    conf_playoff_stats.sort_values(by=['Playoffs'], ascending=False, ignore_index=True, inplace=True)
+    conf_playoff_stats.loc['Total'] = conf_playoff_stats.sum(numeric_only=True)
+
+    # reorganize the formatting within the columns to get percentages
     team_playoff_stats['%AQ'] = team_playoff_stats['AQ'] / team_playoff_stats['Playoffs']
     conf_playoff_stats['%AQ'] = conf_playoff_stats['AQ'] / conf_playoff_stats['Playoffs']
-
-    # take the percentages for teams for playoff appearances and average playoff appearances for conferences
     team_playoff_stats['Playoffs'] = team_playoff_stats['Playoffs'].apply(lambda x: round((x / N) * 100, 4))
     team_playoff_stats['AQ'] = team_playoff_stats['AQ'].apply(lambda x: round((x / N) * 100, 4))
     team_playoff_stats['%AQ'] = team_playoff_stats['%AQ'].apply(lambda x: round(x * 100, 4))
@@ -386,15 +391,12 @@ def clean_results(team_playoff_stats, conf_playoff_stats, conf_df):
     conf_playoff_stats['AQ'] = conf_playoff_stats['AQ'].apply(lambda x: round(x / N, 2))
     conf_playoff_stats['%AQ'] = conf_playoff_stats['%AQ'].apply(lambda x: round(x * 100, 2))
 
-    # turn the team index into a column, sort by values, and rename columns
-    team_playoff_stats.reset_index(inplace=True)
-    conf_playoff_stats.reset_index(inplace=True)
-    team_playoff_stats.sort_values(by=['Playoffs'], ascending=False, ignore_index=True, inplace=True)
-    conf_playoff_stats.sort_values(by=['Playoffs'], ascending=False, ignore_index=True, inplace=True)
+    # rename the columns
     team_playoff_stats.columns = ['Team', '% Time in Playoffs', '% Make Playoffs Due to AQ',
                                   '% of Appearances Due to AQ']
     conf_playoff_stats.columns = ['Conference', 'Avg Num Playoff Teams', 'Avg Num Playoffs Due to AQ',
                                   '% of Teams Due to AQ']
+    conf_playoff_stats.at['Total', 'Conference'] = 'All'
 
     # add the conferences for the individual teams
     team_ind_conf = conf_df.set_index('School')
