@@ -16,7 +16,7 @@ pd.set_option('mode.chained_assignment', None)
 # input data files
 CONFERENCES = "./Input Data/Conferences.xlsx"
 ELO = "./Input Data/Elo By Year.xlsx"
-SCHEDULE = "./Input Data/Mock Schedule.xlsx"
+SCHEDULE = "./Input Data/CFB_Sch_23-24.xlsx"
 FAV_MOV = "./Input Data/MOV Favorite Win.xlsx"
 UPSET_MOV = "./Input Data/MOV Favorite Upset.xlsx"
 
@@ -45,6 +45,14 @@ TWO_L = -31.25  # penalty for having two losses
 THREE_L = -93.75  # penalty for having three losses
 NON_P5 = -125  # penalty for not being in a Power 5 conference
 TITLE_GAME = 41  # bonus for playing in a title game
+
+
+def fill_elo(x, team_ind_elo, last_elo):
+    """ Fill in the elo for the given team or fill with 750 if not in the data """
+    try:
+        return team_ind_elo.loc[x][last_elo.columns[-1]]
+    except KeyError:
+        return 750
 
 
 def calc_win_prob(away_elo, home_elo, neutral):
@@ -117,8 +125,8 @@ def one_week_sim(season_results, last_elo, week_sch, fav_mov_df, upset_mov_df):
     """
     # add the elo for both the home and away team to be able to make the calculation
     team_ind_elo = last_elo.set_index('Team')
-    week_sch['Away_Elo'] = week_sch['Away'].apply(lambda x: team_ind_elo.loc[x][last_elo.columns[-1]])
-    week_sch['Home_Elo'] = week_sch['Home'].apply(lambda x: team_ind_elo.loc[x][last_elo.columns[-1]])
+    week_sch['Away_Elo'] = week_sch['Away'].apply(lambda x: fill_elo(x, team_ind_elo, last_elo))
+    week_sch['Home_Elo'] = week_sch['Home'].apply(lambda x: fill_elo(x, team_ind_elo, last_elo))
 
     # fill teams with no elo with the base 750
     week_sch['Away_Elo'].fillna(750, inplace=True)
@@ -163,7 +171,7 @@ def one_week_sim(season_results, last_elo, week_sch, fav_mov_df, upset_mov_df):
     last_elo = pd.merge(last_elo, week_results[['Team', f'Week_{week}_Elo']], on='Team', how='left')
 
     # fill in elo for teams that didn't play that week in both last_elo and season_results
-    if week == 0:
+    if week == 1:
         prev_week_elo = 'Starting_Elo'
     elif week == 'Conf_Champ':
         prev_week_elo = last_elo.columns[-2]
@@ -492,9 +500,6 @@ def main():
     sch_df = pd.read_excel(SCHEDULE)
     fav_mov_df = pd.read_excel(FAV_MOV, sheet_name=None)
     upset_mov_df = pd.read_excel(UPSET_MOV, sheet_name=None)
-
-    # clean the datasets
-    sch_df.drop(['Game', 'Year'], axis=1, inplace=True)
 
     # run the full simulation
     team_playoff_stats, conf_playoff_stats = run_sim(conf_df, elo_df, sch_df, fav_mov_df, upset_mov_df)
