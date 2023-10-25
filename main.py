@@ -15,7 +15,7 @@ pd.set_option('mode.chained_assignment', None)
 
 # input data files
 CONFERENCES = "./Input Data/Conferences.xlsx"
-ELO = "./Input Data/Elo By Year.xlsx"
+ELO = "./Input Data/Update Elo/Elo By Year.xlsx"
 SCHEDULE = "./Input Data/CFB_Sch_23-24.xlsx"
 FAV_MOV = "./Input Data/MOV Favorite Win.xlsx"
 UPSET_MOV = "./Input Data/MOV Favorite Upset.xlsx"
@@ -127,10 +127,6 @@ def one_week_sim(season_results, last_elo, week_sch, fav_mov_df, upset_mov_df):
     team_ind_elo = last_elo.set_index('Team')
     week_sch['Away_Elo'] = week_sch['Away'].apply(lambda x: fill_elo(x, team_ind_elo, last_elo))
     week_sch['Home_Elo'] = week_sch['Home'].apply(lambda x: fill_elo(x, team_ind_elo, last_elo))
-
-    # fill teams with no elo with the base 750
-    week_sch['Away_Elo'].fillna(750, inplace=True)
-    week_sch['Home_Elo'].fillna(750, inplace=True)
 
     # create a new column with the win percentage using the function
     week_sch['Away_Win%'] = week_sch.apply(lambda x: calc_win_prob(x['Away_Elo'], x['Home_Elo'], x['Neutral']), axis=1)
