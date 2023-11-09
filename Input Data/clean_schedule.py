@@ -1,7 +1,9 @@
 
 import pandas as pd
 
-SCHEDULE = "Update Elo/CFP_Sch_22-23.csv"
+# input variables
+SCHEDULE = "Update Elo/CFB_Sch_22-23.csv"
+PAST = True
 
 pd.set_option('display.max_columns', 10)
 # pd.set_option('display.max_rows', None)
@@ -15,7 +17,7 @@ def past_schedule(sch):
     sch['Away_Win'] = 0
 
     # remove the columns that are not needed
-    sch.drop(['Game', 'Home_Pts', 'Location', 'Away_Pts', 'Notes'], axis=1, inplace=True)
+    sch.drop(['Game', 'Date', 'Time', 'Day', 'Home_Pts', 'Location', 'Away_Pts'], axis=1, inplace=True)
 
     # swap the necessary home and away teams and home and away wins
     idx = (sch['Switch_Teams'] == 1)
@@ -35,7 +37,7 @@ def past_schedule(sch):
 def new_schedule(sch):
 
     # remove the columns that are not needed
-    sch.drop(['Game', 'Home_Pts', 'Location', 'Away_Pts', 'Notes'], axis=1, inplace=True)
+    sch.drop(['Game', 'Date', 'Time', 'Day', 'Home_Pts', 'Location', 'Away_Pts', 'Notes'], axis=1, inplace=True)
 
     # swap the necessary home and away teams
     idx = (sch['Switch_Teams'] == 1)
@@ -55,14 +57,17 @@ def main():
 
     # read in the file and rename the columns
     sch = pd.read_csv(SCHEDULE)
-    sch.columns = ['Game', 'Week', 'Home', 'Home_Pts', 'Location', 'Away', 'Away_Pts', 'Notes']
+    sch.columns = ['Game', 'Week', 'Date', 'Time', 'Day', 'Home', 'Home_Pts', 'Location', 'Away', 'Away_Pts', 'Notes']
 
     # create new columns for neutral and whether to switch the home and away team
     sch['Neutral'] = sch['Location'].apply(lambda x: 1 if x == 'N' else 0)
     sch['Switch_Teams'] = sch['Location'].apply(lambda x: 1 if x == '@' else 0)
 
     # create the schedule and save it to an Excel file with the same name as the csv
-    new_sch = past_schedule(sch)
+    if PAST:
+        new_sch = past_schedule(sch)
+    else:
+        new_sch = new_schedule(sch)
     new_sch.to_excel(SCHEDULE.split(".")[0] + ".xlsx", index=False)
 
 
