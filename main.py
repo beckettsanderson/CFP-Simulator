@@ -16,7 +16,7 @@ pd.set_option('mode.chained_assignment', None)
 # input data files
 CONFERENCES = "./Input Data/Conferences.xlsx"
 ELO = "./Input Data/Update Elo/Elo By Year.xlsx"
-SCHEDULE = "./Input Data/CFB_Sch_23-24.xlsx"
+SCHEDULE = "./Input Data/Update Elo/CFB_Sch_23-24 (Upcoming).xlsx"
 FAV_MOV = "./Input Data/MOV Favorite Win.xlsx"
 UPSET_MOV = "./Input Data/MOV Favorite Upset.xlsx"
 
@@ -119,7 +119,7 @@ def update_elo(starting_elo, team_win_perc, team_win, mov):
     return updated_elo
 
 
-def one_week_sim(season_results, last_elo, week_sch, fav_mov_df, upset_mov_df):
+def one_week_sim(season_results, last_elo, week_sch, fav_mov_df, upset_mov_df, first_week=1):
     """
     Simulate one week of the college football season
     """
@@ -167,7 +167,7 @@ def one_week_sim(season_results, last_elo, week_sch, fav_mov_df, upset_mov_df):
     last_elo = pd.merge(last_elo, week_results[['Team', f'Week_{week}_Elo']], on='Team', how='left')
 
     # fill in elo for teams that didn't play that week in both last_elo and season_results
-    if week == 1:
+    if week == first_week:
         prev_week_elo = 'Starting_Elo'
     elif week == 'Conf_Champ':
         prev_week_elo = last_elo.columns[-2]
@@ -188,6 +188,7 @@ def reg_season_sim(season_results, last_elo, sch_df, fav_mov_df, upset_mov_df):
     """
     # create a list of the difference weeks
     weeks = sch_df['Week'].unique()
+    first_week = weeks[0]
 
     # loop through each of the weeks in the schedule
     for week in weeks:
@@ -196,7 +197,8 @@ def reg_season_sim(season_results, last_elo, sch_df, fav_mov_df, upset_mov_df):
         week_sch = sch_df[sch_df['Week'] == week]
 
         # run the simulation for one week of the regular season
-        season_results, last_elo = one_week_sim(season_results, last_elo, week_sch, fav_mov_df, upset_mov_df)
+        season_results, last_elo = one_week_sim(season_results, last_elo, week_sch, fav_mov_df, upset_mov_df,
+                                                first_week)
 
     # create winning percentage column for season results
     season_results['Win_Perc'] = round(season_results['Season_Wins'] / (season_results['Season_Wins'] + season_results['Season_Losses']), 3)

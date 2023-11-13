@@ -8,9 +8,9 @@ pd.set_option('mode.chained_assignment', None)
 
 # input data files
 ELO = "Elo By Year.xlsx"
-SCHEDULE = "CFB_Sch_22-23.xlsx"
+SCHEDULE = "CFB_Sch_23-24 (Completed).xlsx"
 CONFERENCES = "../Conferences.xlsx"
-YEAR = 2022
+YEAR = '2023 - Temp'
 
 """ VARIABLE INPUTS """
 # matchup elo adjustments
