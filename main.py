@@ -14,7 +14,7 @@ pd.set_option('display.max_rows', None)
 pd.set_option('mode.chained_assignment', None)
 
 # input data files
-CONFERENCES = "./Input Data/Conferences.xlsx"
+CONFERENCES = "./Input Data/Conferences (Old).xlsx"
 ELO = "./Input Data/Update Elo/Elo By Year.xlsx"
 SCHEDULE = "./Input Data/Update Elo/CFB_Sch_23-24 (Upcoming).xlsx"
 FAV_MOV = "./Input Data/MOV Favorite Win.xlsx"
@@ -43,6 +43,7 @@ ZERO_L = 62.5  # reward for having zero losses
 ONE_L = 62.5  # reward for having one loss
 TWO_L = -31.25  # penalty for having two losses
 THREE_L = -93.75  # penalty for having three losses
+FOUR_L_PLUS = THREE_L + (THREE_L - TWO_L)
 NON_P5 = -125  # penalty for not being in a Power 5 conference
 TITLE_GAME = 41  # bonus for playing in a title game
 
@@ -279,6 +280,8 @@ def eos_adjustments(eos_elo, season_losses, p5, conf_champ):
         eos_elo += TWO_L
     elif season_losses == 3:
         eos_elo += THREE_L
+    elif season_losses >= 4:
+        eos_elo += FOUR_L_PLUS
 
     # penalize for teams not being Power 5
     if p5 == 0:

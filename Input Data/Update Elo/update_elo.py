@@ -9,8 +9,9 @@ pd.set_option('mode.chained_assignment', None)
 # input data files
 ELO = "Elo By Year.xlsx"
 SCHEDULE = "CFB_Sch_23-24 (Completed).xlsx"
-CONFERENCES = "../Conferences.xlsx"
+CONFERENCES = "../Conferences (Old).xlsx"
 YEAR = '2023 - Temp'
+CURRENT_SEASON = True
 
 """ VARIABLE INPUTS """
 # matchup elo adjustments
@@ -146,7 +147,7 @@ def eos_adjustments(eos_elo, season_losses, p5, conf_champ):
         eos_elo += ONE_L
     elif season_losses == 2:
         eos_elo += TWO_L
-    elif season_losses == 3:
+    elif season_losses >= 3:
         eos_elo += THREE_L
 
     # penalize for teams not being Power 5
@@ -211,19 +212,24 @@ def season_sim(elo_df, sch_df, conf_df):
         season_results['Conf_Chip'] = season_results.apply(
             lambda x: 1 if x[f'Conf_Chip_{week}'] == 1 else x['Conf_Chip'], axis=1)
 
-    # make the end of season adjustments
-    season_results['EOS_Elo'] = season_results.apply(lambda x: eos_adjustments(x[f'Week_{weeks[-1]}_Elo'],
-                                                                               x['Season_Losses'],
-                                                                               x['P5'],
-                                                                               x['Conf_Chip']), axis=1)
-    last_elo = pd.merge(last_elo, season_results[['Team', f'EOS_Elo']], on='Team', how='left')
-    last_elo['EOS_Elo'] = last_elo.apply(
-        lambda x: x['EOS_Elo'] if ~np.isnan(x['EOS_Elo']) else x[f'Week_{weeks[-1]}_Elo'], axis=1)
+    # checks if it's the current season to not double count end of season adjustments
+    if CURRENT_SEASON:
+        # creates a final elo column
+        last_elo['Final_Elo'] = last_elo[list(last_elo.columns)[-1]].apply(lambda x: round(x, 2))
+    else:
+        # make the end of season adjustments
+        season_results['EOS_Elo'] = season_results.apply(lambda x: eos_adjustments(x[f'Week_{weeks[-1]}_Elo'],
+                                                                                   x['Season_Losses'],
+                                                                                   x['P5'],
+                                                                                   x['Conf_Chip']), axis=1)
+        last_elo = pd.merge(last_elo, season_results[['Team', f'EOS_Elo']], on='Team', how='left')
+        last_elo['EOS_Elo'] = last_elo.apply(
+            lambda x: x['EOS_Elo'] if ~np.isnan(x['EOS_Elo']) else x[f'Week_{weeks[-1]}_Elo'], axis=1)
 
-    # adjust the final elo to shift back towards 750 or 1500 depending on the school
-    fbs_teams = list(conf_df['School'])
-    last_elo['FBS'] = last_elo['Team'].apply(lambda x: True if x in fbs_teams else False)
-    last_elo['Final_Elo'] = last_elo.apply(lambda x: round(eos_elo(x['EOS_Elo'], x['FBS']), 2), axis=1)
+        # adjust the final elo to shift back towards 750 or 1500 depending on the school
+        fbs_teams = list(conf_df['School'])
+        last_elo['FBS'] = last_elo['Team'].apply(lambda x: True if x in fbs_teams else False)
+        last_elo['Final_Elo'] = last_elo.apply(lambda x: round(eos_elo(x['EOS_Elo'], x['FBS']), 2), axis=1)
 
     return last_elo
 
