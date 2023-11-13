@@ -8,6 +8,7 @@ TYPE = 'Current'
 
 pd.set_option('display.max_columns', 10)
 # pd.set_option('display.max_rows', None)
+pd.options.mode.chained_assignment = None  # default='warn'
 
 
 def past_schedule(sch):
