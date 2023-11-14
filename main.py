@@ -14,9 +14,9 @@ pd.set_option('display.max_rows', None)
 pd.set_option('mode.chained_assignment', None)
 
 # input data files
-CONFERENCES = "./Input Data/Conferences (Old).xlsx"
+CONFERENCES = "./Input Data/Conferences.xlsx"
 ELO = "./Input Data/Update Elo/Elo By Year.xlsx"
-SCHEDULE = "./Input Data/Update Elo/CFB_Sch_23-24 (Upcoming).xlsx"
+SCHEDULE = "./Input Data/Update Elo/CFB_Sch_23-24.xlsx"
 FAV_MOV = "./Input Data/MOV Favorite Win.xlsx"
 UPSET_MOV = "./Input Data/MOV Favorite Upset.xlsx"
 
