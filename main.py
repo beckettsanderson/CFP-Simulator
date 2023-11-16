@@ -43,9 +43,16 @@ ZERO_L = 62.5  # reward for having zero losses
 ONE_L = 62.5  # reward for having one loss
 TWO_L = -31.25  # penalty for having two losses
 THREE_L = -93.75  # penalty for having three losses
-FOUR_L_PLUS = THREE_L + (THREE_L - TWO_L)
+FOUR_L_PLUS = THREE_L + (THREE_L - TWO_L)  # penalty for four losses or more (set by difference in 2 and 3 loss penalty)
 NON_P5 = -125  # penalty for not being in a Power 5 conference
 TITLE_GAME = 41  # bonus for playing in a title game
+
+# variable for if this is a simulation taking into account games from the current season (only if during active season)
+MID_SEASON_SIM = False
+if MID_SEASON_SIM:  # initiates variables to index into Elo df based on season type
+    ELO_COL = -1
+else:
+    ELO_COL = -2
 
 
 def fill_elo(x, team_ind_elo, last_elo):
@@ -316,20 +323,8 @@ def get_top_teams(season_results):
     """
     Get the top 12 teams that would make the playoffs for a given season
     """
-    # collect all the different conferences into a list and then remove the independent variable
-    conferences = list(season_results['Conference'].unique())
-    conferences.remove('Ind')
-    conf_winners = pd.DataFrame()
-
-    # get the top teams in each conference
-    for conf in conferences:
-
-        # get the top team from each conference and append top team to the conference winners df
-        top_team = season_results[season_results['Conference'] == conf].iloc[0]
-        conf_winners = pd.concat([conf_winners, top_team], ignore_index=False, axis=1)
-
-    # transpose the data into the correct format
-    conf_winners = conf_winners.transpose()
+    # get the team that won each conference and create a dataframe for them
+    conf_winners = season_results[season_results['Week_Conf_Champ_Win'] == 1]
 
     # get teams outside the top number that are auto qualified
     outside_aq = conf_winners.iloc[:AQ].query(f'index > {PLAYOFF - 1}')
@@ -423,15 +418,15 @@ def run_sim(conf_df, elo_df, sch_df, fav_mov_df, upset_mov_df):
     # create baseline dataframe for results
     season_results = pd.DataFrame().assign(Team=conf_df['School'],
                                            Conference=conf_df['Acronym'],
-                                           Has_Div=conf_df['Has_Div'],
-                                           Div1=conf_df['Div1'],
-                                           Div2=conf_df['Div2'],
                                            P5=conf_df['P5'],
                                            Season_Wins=0,
-                                           Season_Losses=0)
+                                           Season_Losses=0,
+                                           Has_Div=conf_df['Has_Div'],
+                                           Div1=conf_df['Div1'],
+                                           Div2=conf_df['Div2'])
 
     # pull the most recent elo data
-    last_elo_yr = list(elo_df.columns)[-1]
+    last_elo_yr = list(elo_df.columns)[ELO_COL]
     last_elo = elo_df[['Team', last_elo_yr]]
 
     # add starting elo to the season results df
@@ -506,7 +501,11 @@ def main():
     team_playoff_stats, conf_playoff_stats = run_sim(conf_df, elo_df, sch_df, fav_mov_df, upset_mov_df)
 
     # create unique csv name to save file
-    file_name_add = f'_{datetime.now().strftime("%b%y")}_AQ{AQ}_P{PLAYOFF}_N{N}'
+    if MID_SEASON_SIM:
+        season_type = "Mid_Season"
+    else:
+        season_type = "Start_of_Season"
+    file_name_add = f'_{datetime.now().strftime("%b%y")}_AQ{AQ}_P{PLAYOFF}_N{N}_{season_type}'
 
     # save the dataframes to csv
     team_playoff_stats.to_csv(f"./Simulation Outputs/Team Stats/team_stats{file_name_add}.csv")
