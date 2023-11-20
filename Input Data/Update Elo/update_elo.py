@@ -231,7 +231,9 @@ def season_sim(elo_df, sch_df, conf_df):
         last_elo['FBS'] = last_elo['Team'].apply(lambda x: True if x in fbs_teams else False)
         last_elo['Final_Elo'] = last_elo.apply(lambda x: round(eos_elo(x['EOS_Elo'], x['FBS']), 2), axis=1)
 
-    return last_elo
+    team_record = season_results[['Team', 'Season_Wins', 'Season_Losses']]
+
+    return last_elo, team_record
 
 
 def main():
@@ -246,13 +248,17 @@ def main():
         elo_df.drop([str(YEAR)], axis=1, inplace=True)
 
     # run the season calculations to get the end of season data
-    last_elo = season_sim(elo_df, sch_df, conf_df)
+    last_elo, team_record = season_sim(elo_df, sch_df, conf_df)
 
     # get the year from the input data and add the year to the elo data
     elo_df[str(YEAR)] = last_elo['Final_Elo']
 
     # save the elo data into the same excel path with the new column added on
     elo_df.to_excel(ELO, index=False)
+
+    # save the team records to a file if this is a current year
+    if CURRENT_SEASON:
+        team_record.to_csv(f'../Team Records {YEAR.split(" ")[0]}.csv', index=False)
 
 
 main()

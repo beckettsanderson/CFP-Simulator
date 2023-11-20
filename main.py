@@ -19,6 +19,7 @@ ELO = "./Input Data/Update Elo/Elo By Year.xlsx"
 SCHEDULE = "./Input Data/Update Elo/CFB_Sch_23-24 (Upcoming).xlsx"
 FAV_MOV = "./Input Data/MOV Favorite Win.xlsx"
 UPSET_MOV = "./Input Data/MOV Favorite Upset.xlsx"
+RECORDS = "./Input Data/Team Records 2023.csv"
 
 # set up the global variables for num simulations, qualifiers, and playoff teams based on baseline or git input
 try:
@@ -27,8 +28,8 @@ try:
     PLAYOFF = int(os.environ['INPUT_PLAYOFF'])
 except KeyError:
     N = 100  # number of simulations to run
-    AQ = 6  # number of automatic qualifiers
-    PLAYOFF = 12  # number of playoff teams
+    AQ = 0  # number of automatic qualifiers
+    PLAYOFF = 4  # number of playoff teams
 
 
 """ VARIABLE INPUTS """
@@ -418,12 +419,21 @@ def run_sim(conf_df, elo_df, sch_df, fav_mov_df, upset_mov_df):
     """
     Run the full simulation
     """
+    # create the wins and losses columns based on the team records if it is the middle of the season
+    if MID_SEASON_SIM:
+        records = pd.read_csv(RECORDS)
+        season_wins = records['Season_Wins']
+        season_losses = records['Season_Losses']
+    else:
+        season_wins = 0
+        season_losses = 0
+
     # create baseline dataframe for results
     season_results = pd.DataFrame().assign(Team=conf_df['School'],
                                            Conference=conf_df['Acronym'],
                                            P5=conf_df['P5'],
-                                           Season_Wins=0,
-                                           Season_Losses=0,
+                                           Season_Wins=season_wins,
+                                           Season_Losses=season_losses,
                                            Has_Div=conf_df['Has_Div'],
                                            Div1=conf_df['Div1'],
                                            Div2=conf_df['Div2'])
