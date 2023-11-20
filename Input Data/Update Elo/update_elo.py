@@ -241,6 +241,10 @@ def main():
     sch_df = pd.read_excel(SCHEDULE)
     conf_df = pd.read_excel(CONFERENCES)
 
+    # remove current year if in the elo dataframe
+    if str(YEAR) in list(elo_df.columns):
+        elo_df.drop([str(YEAR)], axis=1, inplace=True)
+
     # run the season calculations to get the end of season data
     last_elo = season_sim(elo_df, sch_df, conf_df)
 
