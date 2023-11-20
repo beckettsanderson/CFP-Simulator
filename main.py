@@ -39,7 +39,10 @@ MOL_FAC = 1.5  # margin of loss factor
 MOL_BAR = 10  # margin of loss barrier
 
 # end of season elo adjustments
-ZERO_L = 62.5  # reward for having zero losses
+if PLAYOFF == 4:
+    ZERO_L = 125  # reward for having zero losses
+else:
+    ZERO_L = 62.5  # reward for having zero losses
 ONE_L = 62.5  # reward for having one loss
 TWO_L = -31.25  # penalty for having two losses
 THREE_L = -93.75  # penalty for having three losses
