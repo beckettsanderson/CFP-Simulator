@@ -21,7 +21,7 @@ FAV_MOV = "./Input Data/MOV Favorite Win.xlsx"
 UPSET_MOV = "./Input Data/MOV Favorite Upset.xlsx"
 RECORDS = "./Input Data/Team Records Theoretical 2023.csv"
 CONF_CHIPS = "./Input Data/Conference Championship Schedule - Theoretical.csv"
-CUSTOM_TAG = '_Alabama-Louisville'
+CUSTOM_TAG = '_Alabama-Louisville-Iowa-OKState'
 
 # set up the global variables for num simulations, qualifiers, and playoff teams based on baseline or git input
 try:
