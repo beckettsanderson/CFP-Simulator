@@ -25,9 +25,15 @@ on:
           - '4'
           - '0'
       PLAYOFF:
+        type: choice
         description: 'Number of teams that make the playoffs:'
         default: '12'
         required: true
+        options:
+          - '16'
+          - '12'
+          - '8'
+          - '4'
 
 jobs:
 
