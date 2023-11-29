@@ -16,12 +16,12 @@ pd.set_option('mode.chained_assignment', None)
 # input data files
 CONFERENCES = "./Input Data/Conferences (Old).xlsx"
 ELO = "./Input Data/Update Elo/Elo By Year.xlsx"
-SCHEDULE = "./Input Data/Update Elo/CFB_Sch_23-24 (Upcoming).xlsx"
+SCHEDULE = "./Input Data/Update Elo/CFB_Sch_23-24 (Upcoming) - Theoretical.xlsx"
 FAV_MOV = "./Input Data/MOV Favorite Win.xlsx"
 UPSET_MOV = "./Input Data/MOV Favorite Upset.xlsx"
-RECORDS = "./Input Data/Team Records 2023.csv"
-CONF_CHIPS = None  # "./Input Data/Conference Championship Schedule - Theoretical.csv"
-CUSTOM_TAG = ''
+RECORDS = "./Input Data/Team Records Theoretical 2023.csv"
+CONF_CHIPS = "./Input Data/Conference Championship Schedule - Theoretical.csv"
+CUSTOM_TAG = '_Iowa'
 
 # set up the global variables for num simulations, qualifiers, and playoff teams based on baseline or git input
 try:
@@ -546,7 +546,7 @@ def main():
     else:
         season_type = "Start_of_Season"
     if CONF_CHIPS is None:
-        theoretical = ''
+        theoretical = '' + CUSTOM_TAG
     else:
         theoretical = '_Theoretical' + CUSTOM_TAG
     file_name_add = f'_{datetime.now().strftime("%b%y")}_AQ{AQ}_P{PLAYOFF}_N{N}_{season_type}{theoretical}'

@@ -8,11 +8,11 @@ pd.set_option('mode.chained_assignment', None)
 
 # input data files
 ELO = "Elo By Year.xlsx"
-SCHEDULE = "CFB_Sch_23-24 (Completed).xlsx"
+SCHEDULE = "CFB_Sch_23-24 (Completed) - Theoretical.xlsx"
 CONFERENCES = "../Conferences (Old).xlsx"
-YEAR = '2023 - Temp'
+YEAR = '2023 - Theoretical'
 CURRENT_SEASON = True
-THEORETICAL = False
+THEORETICAL = True
 if THEORETICAL:
     elo_idx = -2
 else:
