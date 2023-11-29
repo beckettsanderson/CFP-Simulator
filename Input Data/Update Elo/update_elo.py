@@ -12,6 +12,11 @@ SCHEDULE = "CFB_Sch_23-24 (Completed).xlsx"
 CONFERENCES = "../Conferences (Old).xlsx"
 YEAR = '2023 - Temp'
 CURRENT_SEASON = True
+THEORETICAL = False
+if THEORETICAL:
+    elo_idx = -2
+else:
+    elo_idx = -1
 
 """ VARIABLE INPUTS """
 # matchup elo adjustments
@@ -184,7 +189,7 @@ def season_sim(elo_df, sch_df, conf_df):
                                            Season_Losses=0)
 
     # pull the most recent elo data
-    last_elo_yr = list(elo_df.columns)[-1]
+    last_elo_yr = list(elo_df.columns)[elo_idx]
     last_elo = elo_df[['Team', last_elo_yr]]
     last_elo.columns = ['Team', 'Starting_Elo']
 
@@ -258,7 +263,10 @@ def main():
 
     # save the team records to a file if this is a current year
     if CURRENT_SEASON:
-        team_record.to_csv(f'../Team Records {YEAR.split(" ")[0]}.csv', index=False)
+        if THEORETICAL:
+            team_record.to_csv(f'../Team Records Theoretical {YEAR.split(" ")[0]}.csv', index=False)
+        else:
+            team_record.to_csv(f'../Team Records {YEAR.split(" ")[0]}.csv', index=False)
 
 
 main()

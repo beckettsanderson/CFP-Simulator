@@ -20,6 +20,8 @@ SCHEDULE = "./Input Data/Update Elo/CFB_Sch_23-24 (Upcoming).xlsx"
 FAV_MOV = "./Input Data/MOV Favorite Win.xlsx"
 UPSET_MOV = "./Input Data/MOV Favorite Upset.xlsx"
 RECORDS = "./Input Data/Team Records 2023.csv"
+CONF_CHIPS = None  # "./Input Data/Conference Championship Schedule - Theoretical.csv"
+CUSTOM_TAG = ''
 
 # set up the global variables for num simulations, qualifiers, and playoff teams based on baseline or git input
 try:
@@ -41,7 +43,7 @@ MOL_BAR = 10  # margin of loss barrier
 
 # end of season elo adjustments
 if PLAYOFF == 4:
-    ZERO_L = 125  # reward for having zero losses
+    ZERO_L = 93.75  # reward for having zero losses
 else:
     ZERO_L = 62.5  # reward for having zero losses
 ONE_L = 62.5  # reward for having one loss
@@ -262,8 +264,19 @@ def conf_champs_sim(season_results, last_elo, fav_mov_df, upset_mov_df):
     # initialize the empty conference championship schedule
     conf_champ_sch = pd.DataFrame()
 
+    # get the theoretical conference championships if there is one
+    if CONF_CHIPS is not None:
+        conf_chips = pd.read_csv(CONF_CHIPS)
+    else:
+        conf_chips = None
+
     # create the matchups for each conference
     for conf in conferences:
+
+        # check if the conference championship is in the theoretical examples and move on if it is
+        if conf_chips is not None:
+            if conf in conf_chips['Conference'].tolist():
+                continue
 
         # select the results for the teams from that conference and get the matchup for that conference
         conf_results = season_results[season_results['Conference'] == conf]
@@ -278,11 +291,11 @@ def conf_champs_sim(season_results, last_elo, fav_mov_df, upset_mov_df):
     return season_results, last_elo
 
 
-def eos_adjustments(eos_elo, season_losses, p5, conf_champ):
+def eos_adjustments(eos_elo, season_losses, p5, conf_champ, team, conf_chips):
     """
     Adjust the end of season elo's for the teams and create the final rankings
     """
-    # give adjustments for having zero, one, two, or three losses
+    # give adjustments for having zero, one, two, three, or four+ losses
     if season_losses == 0:
         eos_elo += ZERO_L
     elif season_losses == 1:
@@ -301,6 +314,9 @@ def eos_adjustments(eos_elo, season_losses, p5, conf_champ):
     # adjust for if the team played in a conference title game
     if ~np.isnan(conf_champ):
         eos_elo += TITLE_GAME
+    elif conf_chips is not None:
+        if team in conf_chips['Winner'].tolist() or team in conf_chips['Loser'].to_list():
+            eos_elo += TITLE_GAME
 
     return eos_elo
 
@@ -314,10 +330,16 @@ def one_season_sim(season_results, last_elo, sch_df, fav_mov_df, upset_mov_df):
     season_results, last_elo = conf_champs_sim(season_results, last_elo, fav_mov_df, upset_mov_df)
 
     # make the end of season adjustments
+    if CONF_CHIPS is not None:
+        conf_chips = pd.read_csv(CONF_CHIPS)
+    else:
+        conf_chips = None
     season_results['Final_Elo'] = season_results.apply(lambda x: eos_adjustments(x['Week_Conf_Champ_Elo'],
                                                                                  x['Season_Losses'],
                                                                                  x['P5'],
-                                                                                 x['Week_Conf_Champ_Win']), axis=1)
+                                                                                 x['Week_Conf_Champ_Win'],
+                                                                                 x['Team'],
+                                                                                 conf_chips), axis=1)
     season_results.sort_values(by=['Final_Elo'], ascending=False, ignore_index=True, inplace=True)
 
     return season_results
@@ -513,16 +535,25 @@ def main():
     # run the full simulation
     team_playoff_stats, conf_playoff_stats = run_sim(conf_df, elo_df, sch_df, fav_mov_df, upset_mov_df)
 
+    # drop the extra AQ focused rows if there are no automatic qualifiers
+    if AQ == 0:
+        team_playoff_stats.drop(['% Make Playoffs Due to AQ', '% of Appearances Due to AQ'], axis=1, inplace=True)
+        conf_playoff_stats.drop(['Avg Num Playoffs Due to AQ', '% of Teams Due to AQ'], axis=1, inplace=True)
+
     # create unique csv name to save file
     if MID_SEASON_SIM:
         season_type = "Mid_Season"
     else:
         season_type = "Start_of_Season"
-    file_name_add = f'_{datetime.now().strftime("%b%y")}_AQ{AQ}_P{PLAYOFF}_N{N}_{season_type}'
+    if CONF_CHIPS is None:
+        theoretical = ''
+    else:
+        theoretical = '_Theoretical' + CUSTOM_TAG
+    file_name_add = f'_{datetime.now().strftime("%b%y")}_AQ{AQ}_P{PLAYOFF}_N{N}_{season_type}{theoretical}'
 
     # save the dataframes to csv
-    team_playoff_stats.to_csv(f"./Simulation Outputs/Team Stats/team_stats{file_name_add}.csv")
-    conf_playoff_stats.to_csv(f"./Simulation Outputs/Conference Stats/conference_stats{file_name_add}.csv")
+    # team_playoff_stats.to_csv(f"./Simulation Outputs/Team Stats/team_stats{file_name_add}.csv")
+    # conf_playoff_stats.to_csv(f"./Simulation Outputs/Conference Stats/conference_stats{file_name_add}.csv")
 
     # display the tables within python
     print(team_playoff_stats, "\n")
