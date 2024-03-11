@@ -260,6 +260,7 @@ def conf_champs_sim(season_results, last_elo, fav_mov_df, upset_mov_df):
     # collect all the different conferences into a list and then remove the independent variable
     conferences = list(season_results['Conference'].unique())
     conferences.remove('Ind')
+    conferences.remove('Pac-12')
 
     # initialize the empty conference championship schedule
     conf_champ_sch = pd.DataFrame()
