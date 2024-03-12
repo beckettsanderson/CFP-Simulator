@@ -30,8 +30,8 @@ try:
     PLAYOFF = int(os.environ['INPUT_PLAYOFF'])
 except KeyError:
     N = 100  # number of simulations to run
-    AQ = 0  # number of automatic qualifiers
-    PLAYOFF = 4  # number of playoff teams
+    AQ = 5  # number of automatic qualifiers
+    PLAYOFF = 12  # number of playoff teams
 
 
 """ VARIABLE INPUTS """
@@ -54,7 +54,7 @@ NON_P5 = -125  # penalty for not being in a Power 5 conference
 TITLE_GAME = 41  # bonus for playing in a title game
 
 # variable for if this is a simulation taking into account games from the current season (only if during active season)
-MID_SEASON_SIM = True
+MID_SEASON_SIM = False
 if MID_SEASON_SIM:  # initiates variables to index into Elo df based on season type
     ELO_COL = -1
 else:
@@ -133,7 +133,7 @@ def update_elo(starting_elo, team_win_perc, team_win, mov):
     return updated_elo
 
 
-def one_week_sim(season_results, last_elo, week_sch, fav_mov_df, upset_mov_df, first_week=1):
+def one_week_sim(season_results, last_elo, week_sch, fav_mov_df, upset_mov_df, first_week=1, custom_chips=False):
     """
     Simulate one week of the college football season
     """
@@ -322,7 +322,7 @@ def eos_adjustments(eos_elo, season_losses, p5, conf_champ, team, conf_chips):
     return eos_elo
 
 
-def one_season_sim(season_results, last_elo, sch_df, fav_mov_df, upset_mov_df):
+def one_season_sim(season_results, last_elo, sch_df, fav_mov_df, upset_mov_df, conf_chips):
     """
     Run one season of the simulation
     """
@@ -331,10 +331,6 @@ def one_season_sim(season_results, last_elo, sch_df, fav_mov_df, upset_mov_df):
     season_results, last_elo = conf_champs_sim(season_results, last_elo, fav_mov_df, upset_mov_df)
 
     # make the end of season adjustments
-    if CONF_CHIPS is not None:
-        conf_chips = pd.read_csv(CONF_CHIPS)
-    else:
-        conf_chips = None
     season_results['Final_Elo'] = season_results.apply(lambda x: eos_adjustments(x['Week_Conf_Champ_Elo'],
                                                                                  x['Season_Losses'],
                                                                                  x['P5'],
@@ -346,12 +342,19 @@ def one_season_sim(season_results, last_elo, sch_df, fav_mov_df, upset_mov_df):
     return season_results
 
 
-def get_top_teams(season_results):
+def get_top_teams(season_results, conf_chips):
     """
     Get the top 12 teams that would make the playoffs for a given season
     """
     # get the team that won each conference and create a dataframe for them
     conf_winners = season_results[season_results['Week_Conf_Champ_Win'] == 1]
+
+    # incorporate the custom championship winners if they exist
+    if conf_chips is not None:
+        conf_winners_custom = season_results[season_results['Team'].isin(conf_chips['Winner'].tolist())]
+        conf_winners_custom['Week_Conf_Champ_Win'] = 1
+        conf_winners = pd.concat([conf_winners, conf_winners_custom])
+        conf_winners.sort_index(inplace=True)
 
     # get teams outside the top number that are auto qualified
     outside_aq = conf_winners.iloc[:AQ].query(f'index > {PLAYOFF - 1}')
@@ -472,6 +475,12 @@ def run_sim(conf_df, elo_df, sch_df, fav_mov_df, upset_mov_df):
             if e_row['Team'] == row['Team']:
                 season_results.loc[idx, 'Starting_Elo'] = e_row[last_elo_yr]
 
+    # initialize custom conference championship data if it exists
+    if CONF_CHIPS is not None:
+        conf_chips = pd.read_csv(CONF_CHIPS)
+    else:
+        conf_chips = None
+
     # rename the columns of the elo table
     last_elo.columns = ['Team', 'Starting_Elo']
 
@@ -495,10 +504,15 @@ def run_sim(conf_df, elo_df, sch_df, fav_mov_df, upset_mov_df):
             temp_season_results = season_results
 
             # simulate one season of games
-            temp_season_results = one_season_sim(temp_season_results, last_elo, sch_df, fav_mov_df, upset_mov_df)
+            temp_season_results = one_season_sim(temp_season_results,
+                                                 last_elo,
+                                                 sch_df,
+                                                 fav_mov_df,
+                                                 upset_mov_df,
+                                                 conf_chips)
 
             # get the top teams from that simulation
-            top_teams, outside_aq = get_top_teams(temp_season_results)
+            top_teams, outside_aq = get_top_teams(temp_season_results, conf_chips)
 
             # get the teams and conferences for playoffs and AQs
             teams = top_teams['Team'].tolist()
@@ -553,8 +567,8 @@ def main():
     file_name_add = f'_{datetime.now().strftime("%b%y")}_AQ{AQ}_P{PLAYOFF}_N{N}_{season_type}{theoretical}'
 
     # save the dataframes to csv
-    team_playoff_stats.to_csv(f"./Simulation Outputs/Team Stats/team_stats{file_name_add}.csv")
-    conf_playoff_stats.to_csv(f"./Simulation Outputs/Conference Stats/conference_stats{file_name_add}.csv")
+    # team_playoff_stats.to_csv(f"./Simulation Outputs/Team Stats/team_stats{file_name_add}.csv")
+    # conf_playoff_stats.to_csv(f"./Simulation Outputs/Conference Stats/conference_stats{file_name_add}.csv")
 
     # display the tables within python
     print(team_playoff_stats, "\n")
